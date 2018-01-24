@@ -29,6 +29,14 @@
    	ctx.lineTo(x-40,y+60);
    	ctx.lineTo(x, y);
     	ctx.stroke();
+	
+	//to get the random color
+    	var i =Math.floor(Math.random() * 255); //Math.floor gives the whole number  // Math.random() gives random number bw 0 and 1
+    	var j =Math.floor(Math.random() * 255);
+    	var k =Math.floor(Math.random() * 255);
+    
+    	ctx.fillStyle ='rgb(' + i + ',' + j + ',' + k + ')';
+	ctx.fill();
 	}
 
 	
