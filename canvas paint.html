@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>First canvas</h1>
+<canvas id="myCan" height="400" width="900" style="border: 1px solid;" ></canvas>
+<br> <br>
+
+<button onclick="clearAll()"> Clear All </button> <!-- execute clearAll() on click -->
+
+<script type="text/javascript">
+	var c = document.getElementById('myCan');
+	var ctx = c.getContext('2d');
+
+
+	ctx.moveTo(20,20);
+	ctx.lineTo(200,20);
+	ctx.stroke();
+
+	ctx.moveTo(20,40);
+	ctx.lineTo(200,40);
+	ctx.stroke();
+
+	
+	//this function is to clear the whole canvas object
+	function clearAll(){
+		ctx.clearRect(0, 0, 400, 900);
+	};
+</script>
+</body>
+</html>
