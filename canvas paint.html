@@ -14,18 +14,30 @@
 	var c = document.getElementById('myCan');
 	var ctx = c.getContext('2d');
 
-	function drawTriangle()
+	function getMousePos(c, event)
 	{
+        var rect = c.getBoundingClientRect();
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        	};
+      	} 
+
+	function drawTriangle(event)
+	{
+	var pos = getMousePos(c, event)
 	ctx.beginPath();
-    ctx.moveTo(200, 50);
-    ctx.lineTo(300, 100);
-    ctx.lineTo(100, 100);
-    ctx.lineTo(200, 50);
-    ctx.stroke();
+    	ctx.moveTo(pos.x, pos.y);
+    	ctx.lineTo(pos.x+40,pos.y+60);
+    	ctx.lineTo(pos.x-40, pos.y+60);
+    	ctx.lineTo(pos.x, pos.y);
+    	ctx.stroke();
 	}
+
 	
-	c.addEventListener('click',drawTriangle);
-	
+	c.addEventListener('click', function(event){
+			drawTriangle(event);
+	} );
 	//this function is to clear the whole canvas object
 	function clearAll(){
 		ctx.clearRect(0, 0, 400, 900);
