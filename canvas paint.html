@@ -13,24 +13,21 @@
 <script type="text/javascript">
 	var c = document.getElementById('myCan');
 	var ctx = c.getContext('2d');
-
-	function getMousePos(c, event)
-	{
-        var rect = c.getBoundingClientRect();
-        return {
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top
-        	};
-      	} 
-
+	
+	 
 	function drawTriangle(event)
 	{
-	var pos = getMousePos(c, event)
+	// to get mouse position
+	var rect = c.getBoundingClientRect();  // element.getBoundingClientRect(); returns left, top, right, bottom, x, y, width, and height properties of element
+	var x = event.clientX - rect.left;  //clientX and clientY gives you horixontal and vertical coords wrt to window size
+	var y = event.clientY - rect.top;	// but we want wrt to our canvas rectangle object thats why clientX minus rect.left
+	
+	// Draw traingle from mouse click position	
 	ctx.beginPath();
-    	ctx.moveTo(pos.x, pos.y);
-    	ctx.lineTo(pos.x+40,pos.y+60);
-    	ctx.lineTo(pos.x-40, pos.y+60);
-    	ctx.lineTo(pos.x, pos.y);
+   	ctx.moveTo(x, y); // start drawing traingle from position of click
+    	ctx.lineTo(x+40,y+60);
+   	ctx.lineTo(x-40,y+60);
+   	ctx.lineTo(x, y);
     	ctx.stroke();
 	}
 
