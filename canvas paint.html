@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>First canvas</h1>
-<canvas id="myCan" height="400" width="900" style="border: 1px solid;" ></canvas>
+<canvas id="myCan" height="400" width="900" style="border: 1px solid; margin-top: 0.125px;" ></canvas>
 <br> <br>
 
 <button onclick="clearAll()"> Clear All </button> <!-- execute clearAll() on click -->
@@ -13,39 +13,65 @@
 <script type="text/javascript">
 	var c = document.getElementById('myCan');
 	var ctx = c.getContext('2d');
-	
-	 
-	function drawTriangle(event)
+
+	var a=null;
+	var b=null;
+	var a1=null;
+	var b1=null;
+	var z = null;
+
+
+	function getMousePos(c, event)
 	{
-	// to get mouse position
-	var rect = c.getBoundingClientRect();  // element.getBoundingClientRect(); returns left, top, right, bottom, x, y, width, and height properties of element
-	var x = event.clientX - rect.left;  //clientX and clientY gives you horixontal and vertical coords wrt to window size
-	var y = event.clientY - rect.top;	// but we want wrt to our canvas rectangle object thats why clientX minus rect.left
-	
-	// Draw traingle from mouse click position	
-	ctx.beginPath();
-   	ctx.moveTo(x, y); // start drawing traingle from position of click
-    	ctx.lineTo(x+40,y+60);
-   	ctx.lineTo(x-40,y+60);
-   	ctx.lineTo(x, y);
+        var rect = c.getBoundingClientRect();  // element.getBoundingClientRect(); returns left, top, right, bottom, x, y, width, and height properties of element
+        return {
+          x: event.clientX - rect.left,  //clientX and clientY gives you horixontal and vertical coords wrt to window size
+          y: event.clientY - rect.top // but we want wrt to our canvas rectangle object thats why clientX minus rect.left
+        	};
+      	} 
+
+	function drawTriangle(x,y,x1,y1)
+	{
+
+		
+		ctx.beginPath();
+    	ctx.moveTo(x,y);
+    	ctx.lineTo(x1,y1);
+    	z= x-(x1-x);
+    	ctx.lineTo(z,y1);
+    	ctx.lineTo(x, y);
     	ctx.stroke();
-	
-	//to get the random color
+
+    	//to get the random color
     	var i =Math.floor(Math.random() * 255); //Math.floor gives the whole number  // Math.random() gives random number bw 0 and 1
     	var j =Math.floor(Math.random() * 255);
     	var k =Math.floor(Math.random() * 255);
-    
+
     	ctx.fillStyle ='rgb(' + i + ',' + j + ',' + k + ')';
-	ctx.fill();
+		ctx.fill();
+		console.log("3 cordinates of traingles are : " + "(" + x+","+y+")" +","+ "(" + x1+","+y1+")" + "," + "(" + z +","+y1+")");
 	}
 
 	
-	c.addEventListener('click', function(event){
-			drawTriangle(event);
-	} );
+	c.addEventListener('mousedown', function(event){
+		var mousedown_pos = getMousePos(c, event); // to get mousedown position
+		a = mousedown_pos.x ;
+		b= mousedown_pos.y ;
+		c.removeEventListener('mousedown', function(event){});
+	});
+
+	c.addEventListener('mouseup', function(event){
+		var mouseup_pos = getMousePos(c, event); // to get mouseup position
+		a1=mouseup_pos.x;
+		b1=mouseup_pos.y;
+		c.removeEventListener('mouseup', function(event){});
+		drawTriangle(a,b,a1,b1); // to draw traingle from mousedown pos to mouseup pos
+	});
+
+
 	//this function is to clear the whole canvas object
 	function clearAll(){
-		ctx.clearRect(0, 0, 400, 900);
+		ctx.clearRect(0, 0, 900, 400);
 	};
 </script>
 </body>
